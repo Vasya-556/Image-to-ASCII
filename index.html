@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image to ASCII</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <p id="error-message" style="color: red; display: none;">Only jpg, jpeg, png files are allowed!</p>
-    <input id="image-input" type="file" accept="image/*">
-    <h3>Before:</h3>
-    <img id="preview-image-before">
-    <h3>After:</h3>
-    <canvas style="display: none;" id="canvas"></canvas>
-    <button id="copy-button">Copy result</button>
+<body class="bg-[var(--background)] flex flex-col items-start p-5 gap-4">
+    <p id="error-message" class="text-red-500 text-xl font-bold" style="display: none;">Only jpg, jpeg, png files are allowed!</p>
+    <label class="inline-flex items-center px-4 py-2 bg-[var(--primary)] text-[var(--text)] rounded-full hover:bg-[var(--accent)] cursor-pointer flex-wrap transition-all">
+        <span>Pick File</span>
+        <input type="file" class="hidden" id="image-input" type="file" accept="image/*">
+    </label>
+    <h3 class="text-[var(--text)] text-lg font-bold">Before:</h3>
+    <img class="transition-transform hover:scale-105 duration-300 rounded-xl" id="preview-image-before">
+    <h3 class="text-[var(--text)] text-lg font-bold">After:</h3>
+    <canvas class="hidden" id="canvas"></canvas>
+    <button class="bg-[var(--primary)] text-[var(--text)] px-4 py-2 rounded-full hover:bg-[var(--accent)] transition-all" id="copy-button">Copy result</button>
     <pre id="label"></pre>
+
     <script style="font-family: monospace;" type="module" src="dist/script.js"></script>
 </body>
 </html>
