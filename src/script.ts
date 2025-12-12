@@ -1,7 +1,6 @@
 const imageInput = document.getElementById("image-input") as HTMLInputElement;
 const previewImageBefore = document.getElementById("preview-image-before") as HTMLImageElement;
-const previewImageAfter = document.getElementById("preview-image-after") as HTMLImageElement;
-const label = document.getElementById("label") as HTMLLabelElement;
+const label = document.getElementById("label") as HTMLPreElement;
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d")
 
@@ -13,7 +12,7 @@ if (!ctx) {
     throw new Error("Could not get 2D context");
 }
 
-const ASCII = " .:-=+*#%@"
+const ASCII = "@%#*+=-:. "
 
 imageInput.addEventListener("change", () => {
     validateFileType()
@@ -55,21 +54,26 @@ const getImageData = (imgSrc : HTMLImageElement) => {
     goThroughPixels(imgSrc, imgD, pix)
 }
 
-const goThroughPixels = (imgSrc : HTMLImageElement, imgd: ImageData, pix: Uint8ClampedArray) => {
+const goThroughPixels = (imgSrc : HTMLImageElement, imgD: ImageData, pix: Uint8ClampedArray) => {
     let average:number;
     let x;
     let s:string = "";
-    for (let i = 0; i < pix.length; i+=4) {
-        average = (pix[i]! + pix[i+1]! + pix[i+2]!)/3
-        pix[i  ] = average
-        pix[i+1] = average
-        pix[i+2] = average
-        x = average/25.6;
-        if ((i/4) % canvas.width === 0 && i !== 0){
-            s += "\n"    
+    let offset: number;
+    let r:number;
+    let g:number;
+    let b:number;
+
+    for (let i = 0; i < imgSrc.height; i++) {
+        for (let j = 0; j < imgSrc.width; j++) {
+            offset = (i * imgSrc.width + j) * 4
+            r = imgD.data[offset  ]!
+            g = imgD.data[offset+1]!
+            b = imgD.data[offset+2]!
+            x = (r + g + b) / 3
+            s += ASCII[Math.floor((x/255) * (ASCII.length - 1))]!
         }
-        s += `${ASCII[Math.round(x)-1]}`
+        s += '\n'
     }
     label.textContent = s
-    ctx.putImageData(imgd,0,0)
+    ctx.putImageData(imgD,0,0)
 }
