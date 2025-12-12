@@ -1,5 +1,7 @@
 const errorMessage = document.getElementById("error-message") as HTMLParagraphElement;
 const imageInput = document.getElementById("image-input") as HTMLInputElement;
+const themeToggle = document.getElementById("theme-toggle") as HTMLInputElement;
+const body = document.getElementById("body");
 const previewImageBefore = document.getElementById("preview-image-before") as HTMLImageElement;
 const ASCIIOutput = document.getElementById("label") as HTMLPreElement;
 const copyButton = document.getElementById("copy-button") as HTMLButtonElement;
@@ -42,6 +44,10 @@ const validateFileType = async () => {
     }
 }
 
+themeToggle.addEventListener("change", () => {
+    themeToggle.checked ? body?.setAttribute("data-theme", "dark") : body?.setAttribute("data-theme", "light")
+})
+
 previewImageBefore.addEventListener("load", async () => {
     await loadImageOnCanvas(previewImageBefore)
 })
@@ -54,6 +60,9 @@ const loadImageOnCanvas = async (imgSrc : HTMLImageElement) => {
 
 const drawASCII = (imgSrc : HTMLImageElement) => {
     let imgD = ctx.getImageData(0,0, imgSrc.width, imgSrc.height)
+
+    str = ""
+    ASCIIOutput.textContent = ""
 
     let average:number;
     let offset: number;

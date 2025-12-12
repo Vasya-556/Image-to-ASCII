@@ -7,18 +7,25 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[var(--background)] flex flex-col items-start p-5 gap-4">
+<body id="body" class="bg-[var(--background)] flex flex-col items-start p-5 gap-4">
     <p id="error-message" class="text-red-500 text-xl font-bold" style="display: none;">Only jpg, jpeg, png files are allowed!</p>
     <label class="inline-flex items-center px-4 py-2 bg-[var(--primary)] text-[var(--text)] rounded-full hover:bg-[var(--accent)] cursor-pointer flex-wrap transition-all">
         <span>Pick File</span>
         <input type="file" class="hidden" id="image-input" type="file" accept="image/*">
+    </label>
+    <label class="inline-flex items-center cursor-pointer">
+        <input id="theme-toggle" type="checkbox" class="sr-only peer" autocomplete="off">
+        <div class="relative w-16 h-8 bg-[var(--primary)] rounded-full peer-checked:bg-[var(--secondary)] 
+                    after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
+                    after:w-7 after:h-7 after:bg-[var(--text)] after:rounded-full after:transition-all 
+                    peer-checked:after:translate-x-[32px]"></div>
     </label>
     <h3 class="text-[var(--text)] text-lg font-bold">Before:</h3>
     <img class="transition-transform hover:scale-105 duration-300 rounded-xl" id="preview-image-before">
     <h3 class="text-[var(--text)] text-lg font-bold">After:</h3>
     <canvas class="hidden" id="canvas"></canvas>
     <button class="bg-[var(--primary)] text-[var(--text)] px-4 py-2 rounded-full hover:bg-[var(--accent)] transition-all" id="copy-button">Copy result</button>
-    <pre id="label"></pre>
+    <pre id="label" class="text-[var(--text)]"></pre>
 
     <script style="font-family: monospace;" type="module" src="dist/script.js"></script>
 </body>
