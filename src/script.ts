@@ -2,6 +2,7 @@ const errorMessage = document.getElementById("error-message") as HTMLParagraphEl
 const imageInput = document.getElementById("image-input") as HTMLInputElement;
 const previewImageBefore = document.getElementById("preview-image-before") as HTMLImageElement;
 const ASCIIOutput = document.getElementById("label") as HTMLPreElement;
+const copyButton = document.getElementById("copy-button") as HTMLButtonElement;
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d")
 
@@ -15,6 +16,7 @@ if (!ctx) {
 }
 
 const ASCII = "@%#*+=-:. "
+let str:string = "";
 
 imageInput.addEventListener("change", () => {
     errorMessage.style.display = "none"
@@ -54,7 +56,6 @@ const drawASCII = (imgSrc : HTMLImageElement) => {
     let imgD = ctx.getImageData(0,0, imgSrc.width, imgSrc.height)
 
     let average:number;
-    let str:string = "";
     let offset: number;
     let r:number;
     let g:number;
@@ -74,3 +75,11 @@ const drawASCII = (imgSrc : HTMLImageElement) => {
     ASCIIOutput.textContent = str
     ctx.putImageData(imgD,0,0)
 }
+
+copyButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(str)
+    copyButton.textContent = "Copied"
+    setTimeout(() => {
+        copyButton.textContent = "Copy result"
+    }, 2000)
+})
